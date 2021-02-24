@@ -1,56 +1,73 @@
 class ProductList {
-  #goods;
-  #allProducts;
+
 
   constructor(container = '.products') {
     console.log('constructor');
     this.container = container;
     // this._goods = [];
-    this.#goods = [];
-    this.#allProducts = [];
+    this._goods = [];
+    this._allProducts = [];
 
-    this.#fetchGoods();
-    this.#render();
+    this._fetchGoods();
+    this._render();
+    this.goodsTotalPrice();
+    this.getTotalWithDiscount(2);
 
-    // this.sum = 0; // BAD!
   }
 
-  // goodsTotalPrice() { // Very BAD!
-  //   this.#goods.forEach((good) => {
-  //     this.sum += good.price;
-  //   });
-  //
-  //   document.querySelector('.someBlock').insertAdjacentHTML('beforeend', `Сумма = ${this.sum}`);
-  //   // return НО НЕ this.sum!!!
-  // }
-  //
-  // getTotalWithDiscount(discount) {
-  //   return this.goodsTotalPrice() * discount;
-  // }
 
-  #fetchGoods() {
-    this.#goods = [
-      {id: 1, title: 'Notebook', price: 20000},
-      {id: 2, title: 'Mouse', price: 1500},
-      {id: 3, title: 'Keyboard', price: 5000},
-      {id: 4, title: 'Gamepad', price: 4500},
+  goodsTotalPrice() {
+    let result = this._goods.reduce(function (acc, good) {
+      return acc + good.price;
+    }, 0);
+    document.querySelector('.someBlock').insertAdjacentHTML('beforeend', `Сумма = ${result}`);
+    return result;
+  }
+
+  getTotalWithDiscount(discount) {
+    const test = this.goodsTotalPrice() * discount;
+    document.querySelector('.someBlock2').insertAdjacentHTML('beforeend', `Итого = ${test}`);
+    return test;
+  }
+
+  _fetchGoods() {
+    this._goods = [{
+        id: 1,
+        title: 'Notebook',
+        price: 20000
+      },
+      {
+        id: 2,
+        title: 'Mouse',
+        price: 1500
+      },
+      {
+        id: 3,
+        title: 'Keyboard',
+        price: 5000
+      },
+      {
+        id: 4,
+        title: 'Gamepad',
+        price: 4500
+      },
     ];
   }
 
-  #render() {
+  _render() {
     const block = document.querySelector(this.container);
 
-    this.#goods.forEach((product) => {
+    this._goods.forEach((product) => {
       const productObject = new ProductItem(product);
       console.log(productObject);
-      this.#allProducts.push(productObject);
+      this._allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
     });
   }
-}
 
+}
 class ProductItem {
-  constructor(product, img='https://placehold.it/200x150') {
+  constructor(product, img = 'https://placehold.it/200x150') {
     this.title = product.title;
     this.price = product.price;
     this.id = product.id;
