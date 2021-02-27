@@ -18,13 +18,10 @@ class ProductList {
     this.getTotalWithDiscount(2);
 
   }
-  // не понимаю почему сумма 2 раза выводится?..
   goodsTotalPrice() {
-    let result = this._goods.reduce(function (acc, good) {
+    return this._goods.reduce(function (acc, good) {
       return acc + good.price;
     }, 0);
-    document.querySelector('.someBlock').insertAdjacentHTML('afterbegin', `Сумма = ${result}`);
-    return result;
   }
 
   getTotalWithDiscount(discount) {
@@ -65,7 +62,10 @@ class ProductList {
       console.log(productObject);
       this._allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
+
     });
+    document.querySelector('.someBlock').insertAdjacentHTML('beforeend', `Сумма = ${this.goodsTotalPrice()}`);
+
   }
 
 }
