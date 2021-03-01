@@ -1,19 +1,18 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
 // Перевести на Promise НЕ ИСПОЛЬЗОВАТЬ fetch
-let getRequest = (url) => {
+let getRequest = (url, callBack) => {
   let xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
   xhr.onreadystatechange = () => {
-    setTimeout(() => {
-      if (xhr.readyState === 4);
+    if (xhr.readyState === 4) {
       if (xhr.status !== 200) {
         console.log('Error');
       } else {
-        console.log(xhr.responseText);
+        callBack(xhr.responseText);
       }
-    })
+    }
   }
-  xhr.send()
+  xhr.send();
 };
 
 ///////////////////////////////////////
